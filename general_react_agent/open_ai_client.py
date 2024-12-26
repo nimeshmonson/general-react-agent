@@ -1,20 +1,12 @@
-from dotenv import load_dotenv
-import os
 from openai import OpenAI
 
-load_dotenv()
-
-client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),  # This is the default and can be omitted
-)
-
-chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": "Say this is a test",
-        }
-    ],
-    model="gpt-4o",
-)
-print(chat_completion)
+class OpenAIClient:
+    def __init__(self, api_key):
+        #api_key=os.environ.get("OPENAI_API_KEY"),  # This is the default and can be omitted
+        self.client = OpenAI(api_key=api_key)
+    def send_message(self, message, tools=None):
+        return self.client.chat.completions.create(
+            messages=message,
+            model="gpt-4o",
+            tools=tools
+        )
