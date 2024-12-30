@@ -1,10 +1,10 @@
 from tavily import TavilyClient
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
+class TavilySearchClient:
+    def __init__(self, api_key):
+        self.client = TavilyClient(api_key = os.getenv("TAVILY_API_KEY"))
 
-tavily_client = TavilyClient(api_key = os.getenv("TAVILY_API_KEY"))
-
-response = tavily_client.get_search_context("who is leo messi?") 
-print(response)
+    def search_internet(self, search_query):
+        print("Searched Tavily: {}".format(search_query))
+        return self.client.get_search_context(search_query)
